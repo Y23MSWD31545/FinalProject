@@ -1,0 +1,90 @@
+/* Container for the Add Event form */
+.add-event-container {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 3rem auto;
+  }
+  
+  .add-event-container h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-weight: bold;
+  }
+  
+  /* Form styling */
+  .event-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-size: 1rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-group input, .form-group textarea {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: #3498db;
+  }
+  
+  /* Styling for textarea */
+  .form-group textarea {
+    resize: vertical;
+    height: 150px;
+  }
+  
+  /* Submit button styling */
+  .submit-btn {
+    background-color: #3498db;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: center;
+  }
+  
+  .submit-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .add-event-container {
+      padding: 1.5rem;
+      margin: 2rem;
+    }
+  
+    .add-event-container h2 {
+      font-size: 1.5rem;
+    }
+  
+    .submit-btn {
+      font-size: 1rem;
+      padding: 0.8rem 1.5rem;
+    }
+  }
+  
