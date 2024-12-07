@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import './UpcomingEvents.css';
 
 const UpcomingEvents = () => {
@@ -7,51 +6,31 @@ const UpcomingEvents = () => {
 
   useEffect(() => {
     const existingSubmissions = JSON.parse(localStorage.getItem('submissions')) || [];
-    // Sort events by date
-    const sortedSubmissions = existingSubmissions.sort((a, b) => new Date(a.date) - new Date(b.date));
-    setSubmissions(sortedSubmissions);
+    setSubmissions(existingSubmissions);
   }, []);
 
   const handleDelete = (index) => {
     const updatedSubmissions = submissions.filter((_, i) => i !== index);
     setSubmissions(updatedSubmissions);
-    localStorage.setItem('submissions', JSON.stringify(updatedSubmissions));
-  };
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+    localStorage.setItem('submissions', JSON.stringify(updatedSubmissions)); 
   };
 
   return (
     <div className="upcoming-events-container">
       <h1>Upcoming Events</h1>
       {submissions.length === 0 ? (
-        <div className="no-events">
-          <p>No upcoming events.</p>
-          <Link to="/add-event" className="add-event-link">
-            Add New Event
-          </Link>
-        </div>
+        <p>No upcoming events.</p>
       ) : (
         <div className="event-list">
           {submissions.map((event, index) => (
             <div key={index} className="event-item">
-              <h4>{event.name}</h4>
-              <p><strong>Date:</strong> {formatDate(event.date)}</p>
+              <h4>Event {index + 1}</h4>
+              <p><strong>Event Name:</strong> {event.name}</p>
+              <p><strong>Date:</strong> {event.date}</p>
               <p><strong>Time:</strong> {event.time}</p>
               <p><strong>Venue:</strong> {event.venue}</p>
               <p><strong>Description:</strong> {event.description}</p>
-              <button 
-                onClick={() => handleDelete(index)}
-                className="delete-button"
-              >
-                Delete Event
-              </button>
+              <button onClick={() => handleDelete(index)}>Delete Event</button>
             </div>
           ))}
         </div>

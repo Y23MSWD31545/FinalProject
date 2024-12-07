@@ -13,7 +13,6 @@ function Navbar({ isAuthenticated, setIsAuthenticated, userRole }) {
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
-    localStorage.removeItem('token');
     navigate('/login');
   };
 

@@ -1,105 +1,85 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './AddEvent.css';
+import './AddEvent.css'; 
 
 const AddEvent = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: '',
-    date: '',
-    time: '',
-    venue: '',
-    description: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
+  const [name, setName] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [venue, setVenue] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Get existing submissions from localStorage
+    const newSubmission = { name, date, time, venue, description };
+
     const existingSubmissions = JSON.parse(localStorage.getItem('submissions')) || [];
     
-    // Add new submission to the array
-    const updatedSubmissions = [...existingSubmissions, formData];
-    
-    // Save back to localStorage
-    localStorage.setItem('submissions', JSON.stringify(updatedSubmissions));
-    
-    // Reset form
-    setFormData({
-      name: '',
-      date: '',
-      time: '',
-      venue: '',
-      description: ''
-    });
+    localStorage.setItem('submissions', JSON.stringify([...existingSubmissions, newSubmission]));
 
-    // Navigate to upcoming events page
-    navigate('/upcoming-events');
+    setName('');
+    setDate('');
+    setTime('');
+    setVenue('');
+    setDescription('');
   };
 
   return (
     <div className="add-event-container">
-      <h1>Add New Event</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Event Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Date:</label>
-          <input
-            type="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Time:</label>
-          <input
-            type="time"
-            name="time"
-            value={formData.time}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Venue:</label>
-          <input
-            type="text"
-            name="venue"
-            value={formData.venue}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Description:</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">Add Event</button>
-      </form>
+      <center>
+        <h2>Add Event</h2>
+        <form onSubmit={handleSubmit} className="event-form">
+          <div className="form-group">
+            <label htmlFor="name">Event Name:</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="date">Date:</label>
+            <input
+              type="date"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="time">Time:</label>
+            <input
+              type="time"
+              id="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="venue">Venue:</label>
+            <input
+              type="text"
+              id="venue"
+              value={venue}
+              onChange={(e) => setVenue(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="description">Description:</label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            ></textarea>
+          </div>
+          <button type="submit" className="submit-btn">Submit</button>
+        </form>
+      </center>
     </div>
   );
 };

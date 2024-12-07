@@ -1,59 +1,55 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Home.css';
 
 function Home() {
   return (
     <div className="home-container">
-      <section className="hero-section">
-        <h1>Welcome to Sports Event Management</h1>
-        <p>Track and manage your favorite sports events with ease!</p>
-      </section>
-
-      <div className="image-section">
+      <h1>Welcome to Sports Event Management</h1>
+      <p>Track and manage your favorite sports events!</p>
+      
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <img 
+          style={{ width: '1100px', height: '600px' }} 
           src="https://johancruyffinstitute.com/wp-content/uploads/2014/09/Course-in-Sport-Event-Management.jpg" 
           alt="Sports Event Management"
         />
       </div>
 
-      <section className="about-section">
-        <h2>About Us</h2>
-        <div className="about-content">
-          <p>
-            At Sports Event Management, we are passionate about delivering exceptional sporting experiences. 
-            Our platform provides comprehensive solutions for managing and participating in various sports events 
-            across the region. From local tournaments to professional competitions, we ensure seamless organization 
-            and execution of every event.
-          </p>
+      <section 
+        className="hero" 
+        style={{ 
+          border: '1px solid black', 
+          marginLeft: '15rem', 
+          marginRight: '15rem', 
+          marginTop: '4rem', 
+          padding: '0.5rem', 
+          borderRadius: '18px'
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'center', color: 'black' }}>
+          <h1>About Us</h1>
+        </div>
+        <div style={{ padding: '0.5rem', display: 'flex', justifyContent: 'center', color: 'black' }}>
+          At your website, we are experts in sports event management, delivering top-tier experiences for events of all sizes. From local tournaments to large-scale international competitions, we handle every aspect of planning and execution. Our dedicated team ensures smooth logistics, venue coordination, and seamless sponsor engagement, leaving no detail overlooked.
+          
+          We’re passionate about creating memorable experiences for athletes, fans, and communities. With professionalism, precision, and a love for sports, we bring your event vision to life. Whether it’s managing schedules or coordinating with key partners, we make sure everything runs effortlessly. Let us take care of the details so you can enjoy the game!
         </div>
       </section>
 
-      <section className="features-section">
-        <Link to="/events" className="feature-card-link">
-          <div className="feature-card">
-            <h3>Event Registration</h3>
-            <p>Easy and quick registration process for all sports events. Register as a player, team, or volunteer.</p>
+      <footer>
+        <section>
+          <div style={{ display: 'flex', justifyContent: 'center', color: 'rgb(0, 0, 0)', paddingBottom: '1rem', paddingTop: '2rem' }}>
+            <h1>Contact Us</h1>
           </div>
-        </Link>
 
-        <a 
-          href="https://crex.live/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="feature-card-link"
-        >
-          <div className="feature-card">
-            <h3>Live Updates</h3>
-            <p>Stay updated with real-time event schedules, scores, and important announcements.</p>
+          <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', paddingBottom: '3rem' }}>
+            <div><ion-icon name="logo-facebook"></ion-icon> Facebook</div>
+            <div><ion-icon name="logo-instagram"></ion-icon> Instagram</div>
+            <div><ion-icon name="logo-twitter"></ion-icon> Twitter</div>
+            <div><ion-icon name="logo-linkedin"></ion-icon> LinkedIn</div>
           </div>
-        </a>
-
-        <div className="feature-card">
-          <h3>Professional Management</h3>
-          <p>Expert event management ensuring smooth operation of all sporting activities.</p>
-        </div>
-      </section>
+        </section>
+      </footer>
     </div>
   );
 }
