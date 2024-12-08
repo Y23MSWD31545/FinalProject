@@ -1,85 +1,124 @@
 import React, { useState } from 'react';
-import './AddEvent.css'; 
+import { useNavigate } from 'react-router-dom';
+import './AddEvent.css';
+import { API_BASE_URL } from '../config';
 
 const AddEvent = () => {
-  const [name, setName] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [venue, setVenue] = useState('');
-  const [description, setDescription] = useState('');
+  const [eventData, setEventData] = useState({
+    title: '',
+    description: '',
+    date: '',
+    location: '',
+    sportType: '',
+    maxParticipants: ''
+  });
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setEventData({
+      ...eventData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newSubmission = { name, date, time, venue, description };
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_BASE_URL}/events`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(eventData)
+      });
 
-    const existingSubmissions = JSON.parse(localStorage.getItem('submissions')) || [];
-    
-    localStorage.setItem('submissions', JSON.stringify([...existingSubmissions, newSubmission]));
-
-    setName('');
-    setDate('');
-    setTime('');
-    setVenue('');
-    setDescription('');
+      if (response.ok) {
+        alert('Event added successfully!');
+        navigate('/events');
+      } else {
+        const data = await response.json();
+        alert(data.message || 'Failed to add event');
+      }
+    } catch (error) {
+      console.error('Error adding event:', error);
+      alert('Failed to add event. Please try again.');
+    }
   };
 
   return (
     <div className="add-event-container">
-      <center>
-        <h2>Add Event</h2>
-        <form onSubmit={handleSubmit} className="event-form">
-          <div className="form-group">
-            <label htmlFor="name">Event Name:</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="date">Date:</label>
-            <input
-              type="date"
-              id="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="time">Time:</label>
-            <input
-              type="time"
-              id="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="venue">Venue:</label>
-            <input
-              type="text"
-              id="venue"
-              value={venue}
-              onChange={(e) => setVenue(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="description">Description:</label>
-            <textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            ></textarea>
-          </div>
-          <button type="submit" className="submit-btn">Submit</button>
-        </form>
-      </center>
+      <h2>Add New Event</h2>
+      <form onSubmit={handleSubmit} className="event-form">
+        <div className="form-group">
+          <label>Event Title</label>
+          <input
+            type="text"
+            name="title"
+            value={eventData.title}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Description</label>
+          <textarea
+            name="description"
+            value={eventData.description}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Date</label>
+          <input
+            type="date"
+            name="date"
+            value={eventData.date}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Location</label>
+          <input
+            type="text"
+            name="location"
+            value={eventData.location}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Sport Type</label>
+          <input
+            type="text"
+            name="sportType"
+            value={eventData.sportType}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Maximum Participants</label>
+          <input
+            type="number"
+            name="maxParticipants"
+            value={eventData.maxParticipants}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <button type="submit" className="submit-btn">Add Event</button>
+      </form>
     </div>
   );
 };

@@ -4,35 +4,41 @@ import './Home.css';
 function Home() {
   return (
     <div className="home-container">
-      <h1>Welcome to Sports Event Management</h1>
-      <p>Track and manage your favorite sports events!</p>
-      
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <img 
-          style={{ width: '1100px', height: '600px' }} 
-          src="https://johancruyffinstitute.com/wp-content/uploads/2014/09/Course-in-Sport-Event-Management.jpg" 
-          alt="Sports Event Management"
-        />
-      </div>
+      <section className="hero">
+        <h1>Welcome to Sports Event Management</h1>
+        <p>
+          Your one-stop platform for managing and participating in sports events.
+          Join us to discover upcoming tournaments, register for competitions,
+          and connect with fellow sports enthusiasts.
+        </p>
+      </section>
 
-      <section 
-        className="hero" 
-        style={{ 
-          border: '1px solid black', 
-          marginLeft: '15rem', 
-          marginRight: '15rem', 
-          marginTop: '4rem', 
-          padding: '0.5rem', 
-          borderRadius: '18px'
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'center', color: 'black' }}>
-          <h1>About Us</h1>
+      <section className="event-section">
+        <div className="tin">
+          <h1>Featured Events</h1>
         </div>
-        <div style={{ padding: '0.5rem', display: 'flex', justifyContent: 'center', color: 'black' }}>
-          At your website, we are experts in sports event management, delivering top-tier experiences for events of all sizes. From local tournaments to large-scale international competitions, we handle every aspect of planning and execution. Our dedicated team ensures smooth logistics, venue coordination, and seamless sponsor engagement, leaving no detail overlooked.
-          
-          We’re passionate about creating memorable experiences for athletes, fans, and communities. With professionalism, precision, and a love for sports, we bring your event vision to life. Whether it’s managing schedules or coordinating with key partners, we make sure everything runs effortlessly. Let us take care of the details so you can enjoy the game!
+
+        <div className="event-card-container">
+          <div className="event-card">
+            <img src="https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg" alt="Football" />
+            <h2>Football Tournament</h2>
+            <p>Join our annual football tournament and compete with the best teams.</p>
+            <button>Learn More</button>
+          </div>
+
+          <div className="event-card">
+            <img src="https://images.pexels.com/photos/358042/pexels-photo-358042.jpeg" alt="Basketball" />
+            <h2>Basketball Championship</h2>
+            <p>Experience the thrill of basketball in this championship event.</p>
+            <button>Learn More</button>
+          </div>
+
+          <div className="event-card">
+            <img src="https://images.pexels.com/photos/209977/pexels-photo-209977.jpeg" alt="Tennis" />
+            <h2>Tennis Open</h2>
+            <p>Showcase your tennis skills in our open tournament.</p>
+            <button>Learn More</button>
+          </div>
         </div>
       </section>
 
