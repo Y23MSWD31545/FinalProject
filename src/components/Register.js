@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
+import { API_BASE_URL } from '../config';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -15,14 +16,30 @@ const Register = () => {
       return;
     }
 
-    // Store user data in localStorage
-    localStorage.setItem('user', JSON.stringify({
-      username,
-      role: 'user'
-    }));
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
 
-    alert('Registration successful! Please login.');
-    navigate('/login');
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Registration successful! Please login.');
+        navigate('/login');
+      } else {
+        alert(data.message || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Registration failed. Please try again.');
+    }
   };
 
   return (

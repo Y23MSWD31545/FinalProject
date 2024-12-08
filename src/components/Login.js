@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import { API_BASE_URL } from '../config';
 
 const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
@@ -21,39 +22,37 @@ const Login = ({ setIsAuthenticated }) => {
         return;
       }
 
-      // Regular user login - make API call to backend
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      console.log('Attempting login with:', API_BASE_URL); // Debug log
+
+      // Regular user login
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
+        credentials: 'include' // Add this line
       });
 
-      const data = await response.json();
+      console.log('Login response:', response); // Debug log
 
-      if (response.ok) {
-        // Successful login
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('user', JSON.stringify({ username: username, role: 'user' }));
-        localStorage.setItem('role', 'user');
-        setIsAuthenticated(true);
-        navigate('/profile');
-      } else {
-        // If login fails but we want to allow any user
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('user', JSON.stringify({ username: username, role: 'user' }));
-        localStorage.setItem('role', 'user');
-        setIsAuthenticated(true);
-        navigate('/profile');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Login failed');
       }
-    } catch (error) {
-      // If API call fails, still allow login
+
+      const data = await response.json();
+      console.log('Login data:', data); // Debug log
+
+      localStorage.setItem('token', data.token);
       localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('user', JSON.stringify({ username: username, role: 'user' }));
-      localStorage.setItem('role', 'user');
+      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('role', data.user.role);
       setIsAuthenticated(true);
       navigate('/profile');
+    } catch (error) {
+      console.error('Login error:', error);
+      alert(error.message || 'Login failed. Please try again.');
     }
   };
 

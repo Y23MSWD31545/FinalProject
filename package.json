@@ -32,5 +32,7 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "homepage": "https://final-project-ten-sigma-85.vercel.app",
+  "proxy": "https://finalprojectbackend-chc5.onrender.com"
 }
