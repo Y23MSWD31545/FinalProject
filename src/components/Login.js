@@ -24,25 +24,23 @@ const Login = ({ setIsAuthenticated }) => {
 
       console.log('Attempting login with:', API_BASE_URL); // Debug log
 
-      // Regular user login
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify({ username, password }),
-        credentials: 'include' // Add this line
+        body: JSON.stringify({ username, password })
       });
 
       console.log('Login response:', response); // Debug log
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
-      }
-
       const data = await response.json();
       console.log('Login data:', data); // Debug log
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
 
       localStorage.setItem('token', data.token);
       localStorage.setItem('isAuthenticated', 'true');

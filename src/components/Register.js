@@ -17,28 +17,34 @@ const Register = () => {
     }
 
     try {
+      console.log('Attempting registration with:', API_BASE_URL); // Debug log
+
       const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify({
           username,
           password,
-        }),
+        })
       });
 
-      const data = await response.json();
+      console.log('Registration response:', response); // Debug log
 
-      if (response.ok) {
-        alert('Registration successful! Please login.');
-        navigate('/login');
-      } else {
-        alert(data.message || 'Registration failed');
+      const data = await response.json();
+      console.log('Registration data:', data); // Debug log
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
       }
+
+      alert('Registration successful! Please login.');
+      navigate('/login');
     } catch (error) {
       console.error('Registration error:', error);
-      alert('Registration failed. Please try again.');
+      alert(error.message || 'Registration failed. Please try again.');
     }
   };
 
